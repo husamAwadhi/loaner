@@ -7,9 +7,9 @@ services:
     build:
       context: ./../api
       dockerfile: ../docker/dev/python/Dockerfile.dev
-    command: gunicorn --bind 0.0.0.0:5000 cli:app
+    command: gunicorn --reload --bind 0.0.0.0:5000 cli:app
     volumes:
-      - ../api:/usr/src/app
+      - ../api:/home/app/web
     expose:
       - 5000
     env_file:
@@ -24,7 +24,7 @@ services:
     container_name: loaner-nginx
     restart: unless-stopped
     ports:
-      - 1337:80
+      - 80:80
     volumes:
       - ./../api:/app
       - ./../docker/dev/nginx:/etc/nginx/conf.d
@@ -55,8 +55,8 @@ services:
   redis:
     container_name: loaner-redis
     image: "redis:alpine"
-    ports:
-      - 6379:6379
+    expose:
+      - 6379
     volumes:
       - "loaner-redis:/data"
     networks:
