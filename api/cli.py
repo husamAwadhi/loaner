@@ -1,6 +1,5 @@
 from flask.cli import FlaskGroup
-
-from loaner.app import app
+from app import app
 
 cli = FlaskGroup(app)
 
